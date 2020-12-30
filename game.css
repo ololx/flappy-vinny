@@ -35,6 +35,8 @@ body {
 #canvas {
     align-self: center;
     box-shadow: 0 0px 0px 3px #98FB98;
+    width: 75%;
+    height: 100%;
 }
 
 #top {
