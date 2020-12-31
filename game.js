@@ -1,3 +1,6 @@
+//Hight Scores
+const hightScores = document.getElementById("score");
+
 //Canvas init
 let cvs = document.getElementById("canvas");
 let ctx = cvs.getContext("2d");
@@ -30,12 +33,12 @@ let grav = 1.5;
 let boom = new Audio();
 let score_audio = new Audio();
 
-boom.src = "audio/fly.mp3";
+boom.src = "audio/game-over.wav";
 score_audio.src = "audio/score.mp3";
 
 function moveUp() {
 	let jumpSize = 25;
-	yPos -= jumpSize;
+	yPos  -= jumpSize;
 }
 
 //Gap params init
@@ -44,7 +47,7 @@ function getGap() {
 	let gapMax = 200;
 	let gapMin = 120;
 
-	return Math.floor(Math.random() * (gapMax-gapMin)) + gapMin;
+	return Math.floor(Math.random() * (gapMax - gapMin)) + gapMin;
 }
 
 // Blocks init
@@ -67,17 +70,12 @@ function newBee() {
 }
 
 function newTrees() {
-	
 	trees.push({
 		x : cvs.width,
 		y : Math.floor(Math.random() * treeTop.height) - treeTop.height,
 		gap: getGap()
 	});
 }
-
-newTrees();
-
-document.addEventListener("keydown", moveUp);
 
 function draw() {
 	ctx.drawImage(bg, 0, 0);
@@ -87,9 +85,9 @@ function draw() {
 	 	ctx.drawImage(bee, bees[i].x, bees[i].y);
 
 		bees[i].x += 3;
-		bees[i].y = (Math.random() * (2 - 1) + 1) === 2 ? bees[i].y + 1 : bees[i].y - 1;
+		bees[i].y = (Math.random() * (2  -  1) + 1) === 2 ? bees[i].y + 1 : bees[i].y  -  1;
 
-		if((xPos + vinny.width >= bees[i].x || xPos >= bees[i].x)
+		if ((xPos + vinny.width >= bees[i].x || xPos >= bees[i].x)
 			&& (xPos + vinny.width <= bees[i].x + bee.width || xPos <= bees[i].x + bee.width)
 			&& (yPos + vinny.height >= bees[i].y || yPos >= bees[i].y)
 			&& (yPos + vinny.height <= bees[i].y + bee.height || yPos <= bees[i].y + bee.height)) {
@@ -97,11 +95,11 @@ function draw() {
 	 		boom.play();
 
 
-			if((score - 10) < 0) {
+			if ((score - 10) < 0) {
 				timeOut = true;
 				setTimeout(function() {location.reload();} , 3000);
 			} else {
-				score -= 10;
+				score  -= 10;
 			}
 		}
 
@@ -112,7 +110,7 @@ function draw() {
 
 		honneys[i].x--;
 
-		if((xPos + vinny.width >= honneys[i].x || xPos >= honneys[i].x)
+		if ((xPos + vinny.width >= honneys[i].x || xPos >= honneys[i].x)
 			&& (xPos + vinny.width <= honneys[i].x + honney.width || xPos <= honneys[i].x + honney.width)
 			&& (yPos + vinny.height >= honneys[i].y || yPos >= honneys[i].y)
 			&& (yPos + vinny.height <= honneys[i].y + honney.height || yPos <= honneys[i].y + honney.height)) {
@@ -127,29 +125,42 @@ function draw() {
 		 ctx.drawImage(treeTop, trees[i].x, trees[i].y);
 		 ctx.drawImage(treeBottom, trees[i].x, trees[i].y + treeTop.height + trees[i].gap);
 
-		 if(trees[i].x === (xPos - 100)) {
+		 if (trees[i].x === (xPos - 100)) {
 		 	newTrees();
 		 	newBee();
 		 	newHonney();
 	 	}
 
 
-		if(trees[i].x === xPos) {
+		if (trees[i].x === xPos) {
 		 	score++;
 	 		score_audio.play();
 	 	}
 
-		if(xPos + vinny.width >= trees[i].x
+		if (xPos + vinny.width >= trees[i].x
 			&& xPos <= trees[i].x + treeTop.width
 			&& (yPos <= trees[i].y + treeTop.height
 			|| yPos + vinny.height >= trees[i].y + treeTop.height + trees[i].gap) 
 			|| yPos + vinny.height >= cvs.height) {
 			 	
+			timeOut = true;
+			updateHightScore(score);
 			boom.play();
 
-			timeOut = true;
-
-			setTimeout(function() {location.reload();} , 3000);
+			setTimeout(
+				function() {
+					score = 0;
+					timeOut = false;
+					xPos = 300;
+					yPos = 240;
+					trees = [];
+					bees = [];
+					honneys = [];
+					newTrees();
+					draw();
+				} , 
+				3000
+			);
 		}
 
 		trees[i].x--;
@@ -165,10 +176,16 @@ function draw() {
 	ctx.font = "24px Verdana";
 	ctx.fillText("Score: " + score, 20, cvs.height - 20);
 
-	if(timeOut !== true) {
+	if (timeOut !== true) {
 		requestAnimationFrame(draw);
 	}
 	
 }
 
+function updateHightScore(score) {
+	if (hightScores.innerHTML < score) hightScores.innerHTML = score;
+}
+
+newTrees();
+document.addEventListener("keydown", moveUp);
 treeBottom.onload = draw;
