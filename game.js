@@ -1,3 +1,43 @@
+/* 
+ * The entity Score
+ */ 
+class Score {
+
+	static ofInitialZero() {
+		return new Score(0);
+	}
+
+	static of(initialValue) {
+		return new Score(initialValue);
+	}
+
+	constructor(initialValue) {
+		if (initialValue == null) console.error(`The value couldn't be ${initialValue}`);
+
+		this.value = initialValue;
+	}
+
+	increase() {
+		this.increase(1);
+	}
+
+	increase(value) {
+		this.value += value;
+	}
+
+	decrease() {
+		this.decrease(1);
+	}
+
+	decrease(value) {
+		this.value -= value;
+	}
+
+	reset() {
+		this.value = 0;
+	}
+}
+
 //Hight Scores
 const hightScores = document.getElementById("score");
 
@@ -21,13 +61,13 @@ bee.src = "img/bee.png";
 honney.src = "img/honney.png";
 
 //Scores
-let score = 0;
+let score = Score.ofInitialZero();
 let timeOut = false;
 
 // Vinny Positions
 let xPos = 300;
 let yPos = 240;
-let grav = 1.5;
+let gravity = 1.5;
 
 //Sounds effects
 let boom = new Audio();
@@ -79,6 +119,8 @@ function newTrees() {
 
 function draw() {
 	ctx.drawImage(bg, 0, 0);
+	ctx.fillStyle = "Red";
+	ctx.font = "24px Verdana";
 
 	 //FIXME: add random Gap
 	 for(let i = 0; i < bees.length; i++) {
@@ -93,13 +135,24 @@ function draw() {
 			&& (yPos + vinny.height <= bees[i].y + bee.height || yPos <= bees[i].y + bee.height)) {
 			bees.pop();
 	 		boom.play();
-
-
-			if ((score - 10) < 0) {
+			score.decrease(10);
+			
+			if (score.value < 0) {
 				timeOut = true;
-				setTimeout(function() {location.reload();} , 3000);
-			} else {
-				score  -= 10;
+				setTimeout(
+					function() {
+						score = 0;
+						timeOut = false;
+						xPos = 300;
+						yPos = 240;
+						trees = [];
+						bees = [];
+						honneys = [];
+						newTrees();
+						draw();
+						} , 
+					3000
+				);
 			}
 		}
 
@@ -115,7 +168,7 @@ function draw() {
 			&& (yPos + vinny.height >= honneys[i].y || yPos >= honneys[i].y)
 			&& (yPos + vinny.height <= honneys[i].y + honney.height || yPos <= honneys[i].y + honney.height)) {
 			honneys.pop();
-			score += 10;
+			score.increase(10);
 	 		score_audio.play();
 		}
 
@@ -133,7 +186,7 @@ function draw() {
 
 
 		if (trees[i].x === xPos) {
-		 	score++;
+		 	score.increase(1);
 	 		score_audio.play();
 	 	}
 
@@ -144,12 +197,12 @@ function draw() {
 			|| yPos + vinny.height >= cvs.height) {
 			 	
 			timeOut = true;
-			updateHightScore(score);
+			updateHightScore(score.value);
 			boom.play();
 
 			setTimeout(
 				function() {
-					score = 0;
+					score.reset();
 					timeOut = false;
 					xPos = 300;
 					yPos = 240;
@@ -169,12 +222,10 @@ function draw() {
 
 	//Phisics
 	ctx.drawImage(vinny, xPos, yPos);
-	yPos += grav;
+	yPos += gravity;
 	
 	//Scores
-	ctx.fillStyle = "Red";
-	ctx.font = "24px Verdana";
-	ctx.fillText("Score: " + score, 20, cvs.height - 20);
+	ctx.fillText("Score: " + score.value, 20, cvs.height - 20);
 
 	if (timeOut !== true) {
 		requestAnimationFrame(draw);
@@ -183,7 +234,7 @@ function draw() {
 }
 
 function updateHightScore(score) {
-	if (hightScores.innerHTML < score) hightScores.innerHTML = score;
+	if (hightScores.innerHTML < score.value) hightScores.innerHTML = score.value;
 }
 
 newTrees();
