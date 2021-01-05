@@ -1,5 +1,9 @@
-/* 
- * The entity Score
+/**
+ * The type Score.
+ *
+ * @author Alexander A. Kropotin
+ * @project flappy-vinny
+ * @created 04.01.2020 15:40
  */ 
 class Score {
 
@@ -11,10 +15,21 @@ class Score {
 		return new Score(initialValue);
 	}
 
+	_value = 0;
+
 	constructor(initialValue) {
 		if (initialValue == null) console.error(`The value couldn't be ${initialValue}`);
+		else if (!Number.isInteger(initialValue)) console.error(`The value must be an integer`);
 
-		this.value = initialValue;
+		this._value = initialValue;
+	}
+
+	get value() {
+		return this._value;
+	}
+
+	set value(value) {
+		this._value = value;
 	}
 
 	increase() {
@@ -22,7 +37,7 @@ class Score {
 	}
 
 	increase(value) {
-		this.value += value;
+		this._value += value;
 	}
 
 	decrease() {
@@ -30,11 +45,11 @@ class Score {
 	}
 
 	decrease(value) {
-		this.value -= value;
+		this._value -= value;
 	}
 
 	reset() {
-		this.value = 0;
+		this._value = 0;
 	}
 }
 
@@ -67,7 +82,7 @@ let timeOut = false;
 // Vinny Positions
 let xPos = 300;
 let yPos = 240;
-let gravity = 1.5;
+let speed = 1.5;
 
 //Sounds effects
 let boom = new Audio();
@@ -126,7 +141,7 @@ function draw() {
 	 for(let i = 0; i < bees.length; i++) {
 	 	ctx.drawImage(bee, bees[i].x, bees[i].y);
 
-		bees[i].x += 3;
+		bees[i].x += Math.floor(speed + (3 * (score.value / 100)));
 		bees[i].y = (Math.random() * (2  -  1) + 1) === 2 ? bees[i].y + 1 : bees[i].y  -  1;
 
 		if ((xPos + vinny.width >= bees[i].x || xPos >= bees[i].x)
@@ -141,10 +156,11 @@ function draw() {
 				timeOut = true;
 				setTimeout(
 					function() {
-						score = 0;
+						score.reset();
 						timeOut = false;
 						xPos = 300;
 						yPos = 240;
+						speed = 1.5;
 						trees = [];
 						bees = [];
 						honneys = [];
@@ -160,8 +176,7 @@ function draw() {
 
 	 for(let i = 0; i < honneys.length; i++) {
 	 	ctx.drawImage(honney, honneys[i].x, honneys[i].y);
-
-		honneys[i].x--;
+	 	honneys[i].x -= Math.floor(speed + (0.5 * (score.value / 100)));
 
 		if ((xPos + vinny.width >= honneys[i].x || xPos >= honneys[i].x)
 			&& (xPos + vinny.width <= honneys[i].x + honney.width || xPos <= honneys[i].x + honney.width)
@@ -206,6 +221,7 @@ function draw() {
 					timeOut = false;
 					xPos = 300;
 					yPos = 240;
+					speed = 1.5;
 					trees = [];
 					bees = [];
 					honneys = [];
@@ -216,16 +232,16 @@ function draw() {
 			);
 		}
 
-		trees[i].x--;
+		trees[i].x -= Math.floor(speed + (0.5 * (score.value / 100)));
 
 	}
 
 	//Phisics
 	ctx.drawImage(vinny, xPos, yPos);
-	yPos += gravity;
+	yPos += speed + (0.3 * (score.value / 100));
 	
 	//Scores
-	ctx.fillText("Score: " + score.value, 20, cvs.height - 20);
+	ctx.fillText(`Score: ${score.value}`, 20, cvs.height - 20);
 
 	if (timeOut !== true) {
 		requestAnimationFrame(draw);
@@ -234,7 +250,7 @@ function draw() {
 }
 
 function updateHightScore(score) {
-	if (hightScores.innerHTML < score.value) hightScores.innerHTML = score.value;
+	if (hightScores.innerHTML < score) hightScores.innerHTML = score;
 }
 
 newTrees();
