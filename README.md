@@ -26,7 +26,7 @@ This is a simple 2D game written in Vanilla JavaScript. The Flappy Vinny is a si
 ## 📸 Demo
 
 These animation demonstrate the main game process - press any button to fly so long as it possible.
-![The lflappy vinny demo](https://github.com/ololx/flappy-vinny/blob/assets/demo/flappy-vinny-demo-1.gif?raw=true)
+<img src="https://github.com/ololx/flappy-vinny/blob/assets/demo/flappy-vinny-demo-1.gif?raw=true" align="center" width="100%"/>
 
 ## 🎚 Features
 
