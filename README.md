@@ -14,7 +14,6 @@ This is a very simple flappy bird like game.
 - [Demo](#demo)
 - [Features](#feature)
 - [Getting Started](#getting-started)
-- [Contributing](#contributing)
 - [Versioning](#versioning)
 - [Authors](#authors)
 - [Licensing](#licensing)
