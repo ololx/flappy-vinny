@@ -35,8 +35,7 @@ body {
 #canvas {
     align-self: center;
     box-shadow: 0 0px 0px 3px #ffa500;
-    width: 100%;
-    height:100%;
+    height: 100%
 }
 
 #top {
@@ -60,8 +59,6 @@ body {
 #top > p {
     align-self: center;
     position: relative;
-    min-left: 5px;
-    max-left: 10px;
     left: 1%;
     text-shadow: -1px -1px #000,
                0 1px 0 #404040;
@@ -79,7 +76,5 @@ body {
 
 #bottom > p {
      position: relative;
-     min-left: 5px;
-     max-left: 10px;
      left: 1%;
 }

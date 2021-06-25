@@ -10,6 +10,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 - Refactor old project classes via game dev patterns implemetation.
 
+## [0.0.4] - 2021-06-25
+
+### Fixed
+
+- The canvas width/height problem.
+
 ## [0.0.3] - 2021-01-05
 
 ### Added
