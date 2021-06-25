@@ -112,15 +112,15 @@ let honneys = [];
 
 function newHonney() {
 	honneys.push({
-		x : Math.floor(Math.random() * (640 - 400)) + 400,
-		y : Math.floor(Math.random() * (500 - 10)) + 10,
+		x : Math.floor(Math.random() * (cvs.width - (cvs.width * 0.75))) + (cvs.width  * 0.75),
+		y : Math.floor(Math.random() * ((cvs.height - honney.height) - (honney.height * 0.1))) + (honney.height * 0.1),
 	});
 }
 
 function newBee() {
 	bees.push({
-		x : 0,
-		y : Math.floor(Math.random() * (500 - 10)) + 10,
+		x : Math.floor(Math.random() * ((cvs.width * 0.1) - 0)) + 0,
+		y : Math.floor(Math.random() * (cvs.height - 0)) + 0,
 	});
 }
 
@@ -141,8 +141,8 @@ function draw() {
 	 for(let i = 0; i < bees.length; i++) {
 	 	ctx.drawImage(bee, bees[i].x, bees[i].y);
 
-		bees[i].x += Math.floor(speed + (3 * (score.value / 100)));
-		bees[i].y = (Math.random() * (2  -  1) + 1) === 2 ? bees[i].y + 1 : bees[i].y  -  1;
+		bees[i].x += Math.floor(speed + (3 * (score.value / 100))) * (Math.random() * (2  -  1) + 1);
+		bees[i].y = (Math.random() * (cvs.width  -  1) + 1) <= cvs.width * 0.5 ? bees[i].y + (speed * 3) : bees[i].y - (speed * 3);
 
 		if ((xPos + vinny.width >= bees[i].x || xPos >= bees[i].x)
 			&& (xPos + vinny.width <= bees[i].x + bee.width || xPos <= bees[i].x + bee.width)
@@ -189,20 +189,19 @@ function draw() {
 
 	 }
 
-	 for(let i = 0; i < trees.length; i++) {
+	 for (let i = 0; i < trees.length; i++) {
 		 ctx.drawImage(treeTop, trees[i].x, trees[i].y);
 		 ctx.drawImage(treeBottom, trees[i].x, trees[i].y + treeTop.height + trees[i].gap);
 
-		 if (trees[i].x === (xPos - 100)) {
+		if (trees[i].x === (xPos - 100)) {
 		 	newTrees();
 		 	newBee();
-		 	newHonney();
 	 	}
-
 
 		if (trees[i].x === xPos) {
 		 	score.increase(1);
 	 		score_audio.play();
+			newHonney();
 	 	}
 
 		if (xPos + vinny.width >= trees[i].x
@@ -255,4 +254,5 @@ function updateHightScore(score) {
 
 newTrees();
 document.addEventListener("keydown", moveUp);
+document.addEventListener("click", moveUp);
 treeBottom.onload = draw;

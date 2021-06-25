@@ -10,6 +10,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 - Refactor old project classes via game dev patterns implemetation.
 
+## [0.0.5] - 2021-06-25
+
+### Added
+
+- The moving up by click or tap.
+
 ## [0.0.4] - 2021-06-25
 
 ### Fixed
