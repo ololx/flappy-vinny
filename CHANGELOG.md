@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 - Refactor old project classes via game dev patterns implemetation.
 
-## [0.0.5] - 2021-06-25
+## [1.0.0] - 2021-06-25
 
 ### Added
 

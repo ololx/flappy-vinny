@@ -86,10 +86,10 @@ let speed = 1.5;
 
 //Sounds effects
 let boom = new Audio();
-let score_audio = new Audio();
+let scoreAudio = new Audio();
 
 boom.src = "audio/game-over.wav";
-score_audio.src = "audio/score.mp3";
+scoreAudio.src = "audio/score.mp3";
 
 function moveUp() {
 	let jumpSize = 25;
@@ -184,7 +184,7 @@ function draw() {
 			&& (yPos + vinny.height <= honneys[i].y + honney.height || yPos <= honneys[i].y + honney.height)) {
 			honneys.pop();
 			score.increase(10);
-	 		score_audio.play();
+	 		scoreAudio.play();
 		}
 
 	 }
@@ -200,7 +200,7 @@ function draw() {
 
 		if (trees[i].x === xPos) {
 		 	score.increase(1);
-	 		score_audio.play();
+	 		scoreAudio.play();
 			newHonney();
 	 	}
 
