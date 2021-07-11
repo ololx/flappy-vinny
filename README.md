@@ -4,9 +4,11 @@ This is a very simple flappy bird like game.
 
 [![status](https://img.shields.io/badge/status-completed-inactive?style=flat-square)](BADGES_GUIDE.md#status) [![version](https://img.shields.io/badge/version-1.0.0-informational?style=flat-square)](BADGES_GUIDE.md#version) [![stable](https://img.shields.io/badge/stable-yes-important?style=flat-square)](BADGES_GUIDE.md#stable)  [![oss lifecycle](https://img.shields.io/badge/oss_lifecycle-maintenance-important?style=flat-square)](BADGES_GUIDE.md#oss-lifecycle) [![maintenance](https://img.shields.io/badge/maintenance-yes-informational?style=flat-square)](BADGES_GUIDE.md#maintenance) [![last release](https://img.shields.io/badge/last_release-June_12,_2019-informational?style=flat-square)](BADGES_GUIDE.md#release-date) [![last commit](https://img.shields.io/badge/last_commit-July_02,_2021-informational?style=flat-square)](BADGES_GUIDE.md#commit-date)
 
-[![license](https://img.shields.io/badge/license-MIT-informational?style=flat-square)](LICENSE) 
+[![license](https://img.shields.io/badge/license-UNLICENCE-informational?style=flat-square)](LICENSE)
 
 ---
+
+[![Java Script](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript)](#built-with) [![HTML](https://img.shields.io/badge/HTML-239120?style=for-the-badge&logo=html5&logoColor=white)](#built-with) [![CSS](https://img.shields.io/badge/CSS-239120?&style=for-the-badge&logo=css3&logoColor=white)](#built-with)
 
 ## 📇 Table of Contents
 
